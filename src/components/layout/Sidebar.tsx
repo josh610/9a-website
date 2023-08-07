@@ -7,6 +7,7 @@ const Sidebar = () => {
             <div className='box'>Climbs</div>
             <div className='box'>Climbers</div>
             <div className='box'>By Year</div>
+            <div className='box'>Add new ascent</div>
         </div>
     )
 }

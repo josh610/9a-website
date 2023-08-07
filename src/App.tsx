@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Ascents from './components/Ascents'
+import Create from './components/Create'
 import Layout from './components/layout/Layout'
 import './App.css'
 
@@ -11,8 +12,7 @@ const App = () => {
           <Routes>
             <Route path='/' Component={null}/>
             <Route path='/ascents' Component={Ascents}/>
-            <Route path='/climbs' Component={null}/>
-            <Route path='/climbers' Component={null}/>
+            <Route path='/create' Component={Create}/>
           </Routes>
         </BrowserRouter>
       </Layout>
