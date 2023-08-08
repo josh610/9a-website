@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 
 export interface AscentProps{
+  id: number
   climber: {
     name: String
   }
@@ -22,6 +23,7 @@ export interface AscentProps{
 export const QUERY_ALL_ASCENTS = gql`
   query Ascents($order_by: [ascent_order_by!], $where: ascent_bool_exp, $limit: Int) {
     ascent(order_by: $order_by, where: $where, limit: $limit) {
+      id
       added_at
       climb {
         added_at

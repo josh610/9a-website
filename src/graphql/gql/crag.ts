@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 
 export interface CragProps{
+    id: number
     climbs?: {
         name: string
         grade: string
@@ -23,6 +24,7 @@ export interface CragProps{
 export const QUERY_ALL_CRAGS = gql`
 query Crags($order_by: [crag_order_by!], $where: crag_bool_exp, $limit: Int) {
     crag(order_by: $order_by, where: $where, limit: $limit) {
+        id
         added_at
         climbs {
             name

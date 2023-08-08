@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { gql } from '@apollo/client'
-import { graphqlClient } from '../graphql/Client'
-import { QUERY_ALL_CLIMBS } from '../graphql/gql/climb'
-import { QUERY_ALL_CLIMBERS } from '../graphql/gql/climber'
-import Dropdown from './ui/Dropdown'
-import '../styles/defaults.css'
+import '../../styles/defaults.css'
+import { graphqlClient } from '../../graphql/Client'
+import { QUERY_ALL_CLIMBS } from '../../graphql/gql/climb'
+import { QUERY_ALL_CLIMBERS } from '../../graphql/gql/climber'
 
 const CreateAscent = () => {
     const [climbs, setClimbs] = useState([""])
@@ -43,12 +42,6 @@ const CreateAscent = () => {
         <div className='Create'>
             Create Ascent
             <form onSubmit={submitHandler}>
-                <div className=''>
-                    <Dropdown options={[{value: "1", label: "1"}]}></Dropdown>
-                </div>
-                <div className=''>
-                    <Dropdown options={[{value: "1", label: "1"}]}></Dropdown>
-                </div>
                 <div className=''>
                     <label>Grade Proposal
                         <input
