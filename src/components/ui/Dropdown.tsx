@@ -3,6 +3,7 @@ import { useState } from 'react'
 import '../../styles/defaults.css'
 
 interface DropdownProps {
+    key: string
     options: {
         key: any
         value: any

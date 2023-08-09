@@ -1,5 +1,5 @@
-import { useState } from "react"
 import Dropdown from "../Dropdown"
+import { getNameFromPath } from "./common"
 
 interface TableFilterProps{
     columns: {key: string, label: string, path: string, sortable: boolean}[]
@@ -8,10 +8,6 @@ interface TableFilterProps{
   }
 
 const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
-    const [sortField, setSortField] = useState("")
-    const [order, setOrder] = useState(0)
-    const sortDisplayIcons = ["", "▼", "▲"]
-
     const getFieldContent = (path: string): {key: any, value: any, label: string}[] => {
         return [{key: "0", value: "none", label: "None"}].concat(
             Array.from(new Set(data.map(d => getNameFromPath(path, d))))
@@ -35,6 +31,7 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
             {columns.map(({ key, label, path }) => {
                 return (
                     <Dropdown
+                        key={key}
                         options={getFieldContent(path)}
                         onChange={e => handleFilterChange(
                             e == "none" ?
@@ -45,15 +42,6 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
             })}
         </div>
     )
-}
-  
-const getNameFromPath = (path: string, data: any): string => {
-    const s = path.split('.')
-    for(var i = 0; i < s.length; i++){
-        data = data[s[i]]
-    }
-
-    return data
 }
 
 const getFilterQuery = (path: string, target: string): any => {

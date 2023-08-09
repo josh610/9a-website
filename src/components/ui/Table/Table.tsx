@@ -42,6 +42,7 @@ const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, quer
         <>
             <TableFilter columns={columns} handleFilter={handleFilter} data={data[queryName]}/>
             <table className="table">
+                
                 <TableHead columns={columns} handleSorting={handleSorting} />
                 <TableBody columns={columns} data={data[queryName]} />
             </table>
