@@ -7,7 +7,7 @@ import TableFilter from "./TableFilter"
 
 
 interface TableProps {
-    columns: {key: string, label: string, path: string, sortable: boolean, filterable: boolean, links: boolean}[]
+    columns: {key: string, label: string, path: string, sortable?: boolean, filterable?: boolean, links?: boolean}[]
     query: DocumentNode
     queryVariables: {}
     queryName: any

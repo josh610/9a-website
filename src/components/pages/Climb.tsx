@@ -20,7 +20,7 @@ const Climb = () => {
         <div>Grade: {climb.grade}</div>
         <div>Location:
             <Link to={`/crags/${climb.crag.id}`}>{climb.crag.name}</Link>, 
-            <Link to={`/climbers/${climb.crag.country.id}`}>{climb.crag.country.name}</Link>
+            <Link to={`/countries/${climb.crag.country.id}`}>{climb.crag.country.name}</Link>
         </div>
         <br></br>
         {climb.description ?
