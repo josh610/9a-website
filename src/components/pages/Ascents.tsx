@@ -4,15 +4,16 @@ import Table from '../ui/Table/Table'
 
 const Ascents = () => {
     return (
-        <div className='Ascent'>
+        <div>
+            Ascents
             <Table
               columns={[
-                { key: "1", label: "Climber", path: "climber.name", sortable: true, filterable: true},
-                { key: "2", label: "Climb", path: "climb.name", sortable: true, filterable: true},
-                { key: "3", label: "Grade", path: "climb.grade", sortable: true, filterable: true},
-                { key: "4", label: "Proposed Grade", path: "grade_proposal", sortable: true, filterable: true},
-                { key: "5", label: "Area", path: "climb.crag.name", sortable: true, filterable: true},
-                { key: "6", label: "Date", path: "_date", sortable: true, filterable: true}
+                { key: "climber", label: "Climber", path: "climber.name", sortable: true, filterable: true, links: true},
+                { key: "climb", label: "Climb", path: "climb.name", sortable: true, filterable: true, links: true},
+                { key: "grade", label: "Grade", path: "climb.grade", sortable: true, filterable: true, links: false},
+                { key: "gradeproposal", label: "Proposed Grade", path: "grade_proposal", sortable: true, filterable: true, links: false},
+                { key: "crag", label: "Area", path: "climb.crag.name", sortable: true, filterable: true, links: true},
+                { key: "date", label: "Date", path: "_date", sortable: true, filterable: true, links: false}
               ]}
               query={QUERY_ALL_ASCENTS}
               queryVariables={{}}

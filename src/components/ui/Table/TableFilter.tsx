@@ -1,5 +1,5 @@
 import Dropdown from "../Dropdown"
-import { getNameFromPath } from "./common"
+import { getValueFromPath } from "./common"
 
 interface TableFilterProps{
     columns: {key: string, label: string, path: string, sortable: boolean}[]
@@ -10,7 +10,7 @@ interface TableFilterProps{
 const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
     const getFieldContent = (path: string): {key: any, value: any, label: string}[] => {
         return [{key: "0", value: "none", label: "None"}].concat(
-            Array.from(new Set(data.map(d => getNameFromPath(path, d))))
+            Array.from(new Set(data.map(d => getValueFromPath(path, d))))
             .sort()
             .map(n => {
                 return {
@@ -44,6 +44,10 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
     )
 }
 
+/**
+ * Given a string path and a target, creates a JS object
+ * @returns JS object, ie. {path: {to: {_eq: target}}}
+ */
 const getFilterQuery = (path: string, target: string): any => {
     return {where: _getFilterQuery(path, "eq", target)}
 }

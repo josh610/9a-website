@@ -1,7 +1,9 @@
-import { getNameFromPath } from "./common"
+import { Link } from "react-router-dom"
+import { getValueFromPath } from "./common"
+const Pluralize = require('pluralize')
 
 interface TBodyProps {
-    columns: {key: string, label: string, path: string, sortable: boolean}[]
+    columns: {key: string, label: string, path: string, sortable: boolean, links: boolean}[]
     data: any[]
 }
 
@@ -12,8 +14,23 @@ const TableBody = ({ columns, data }: TBodyProps) => {
                 return (
                     <tr className='row' key={d.id}>
                         {columns.map(col => {
+                            const name = getValueFromPath(col.path, d)
+                            const page = Pluralize(col.key)
+
+                            // get path to ID
+                            const idPathStrings = col.path.split('.')
+                            idPathStrings[idPathStrings.length - 1] = "id"
+                            console.log(idPathStrings.join('.'))
+                            const id = getValueFromPath(idPathStrings.join('.'), d)
+                            
                             return (
-                                <td className='column' key={col.key}>{getNameFromPath(col.path, d)}</td>
+                                <td className='column' key={col.key}>
+                                    {
+                                        col.links ?
+                                        <Link to={`/${page}/${id}`}>{name}</Link> :
+                                        name
+                                    }
+                                </td>
                             )
                         })}
                     </tr>

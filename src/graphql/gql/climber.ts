@@ -3,8 +3,10 @@ import { gql } from '@apollo/client'
 export interface ClimberProps{
     id: number
     ascents: {
+        id: number
         _date?: string
         climb: {
+            id: number
             name: string
             grade: string
         }
@@ -14,6 +16,7 @@ export interface ClimberProps{
         onsight?: boolean
     }
     home_country: {
+        id: number
         name: string
     } 
     dob?: string
@@ -28,8 +31,10 @@ query Climbers($order_by: [climber_order_by!], $where: climber_bool_exp, $limit:
         id
         added_at
         ascents {
+            id
             _date
             climb {
+                id
                 name
                 grade
             }
@@ -39,6 +44,7 @@ query Climbers($order_by: [climber_order_by!], $where: climber_bool_exp, $limit:
             onsight
         }
         home_country {
+            id
             name
         }
         dob

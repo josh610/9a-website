@@ -7,7 +7,7 @@ import TableFilter from "./TableFilter"
 
 
 interface TableProps {
-    columns: {key: string, label: string, path: string, sortable: boolean, filterable: boolean}[]
+    columns: {key: string, label: string, path: string, sortable: boolean, filterable: boolean, links: boolean}[]
     query: DocumentNode
     queryVariables: {}
     queryName: any
@@ -17,9 +17,7 @@ interface TableProps {
 
 
 /**
- * Sortable table from database query
- * @param columns
- * @returns 
+ * Table from database query with options to sort, filter and limit query results
  */
 const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, queryLimits }: TableProps) => {
     const [queryLimit, setQueryLimit] = useState<Number>(queryLimits[0])
@@ -41,7 +39,7 @@ const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, quer
     return (
         <>
             <TableFilter columns={columns} handleFilter={handleFilter} data={data[queryName]}/>
-            <table className="table">
+            <table>
                 
                 <TableHead columns={columns} handleSorting={handleSorting} />
                 <TableBody columns={columns} data={data[queryName]} />

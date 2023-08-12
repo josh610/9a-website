@@ -3,14 +3,18 @@ import { gql } from '@apollo/client'
 export interface AscentProps{
   id: number
   climber: {
+    id: number
     name: String
   }
   climb: {
     name: String
+    id: number
     grade: String
     crag: {
+      id: number
       name: String
       country: {
+        id: number
         name: String
       }
     }
@@ -26,20 +30,25 @@ export const QUERY_ALL_ASCENTS = gql`
       id
       added_at
       climb {
+        id
         added_at
         name
         grade
         crag {
+          id
           name
           country {
+            id
             name
           }
         }
       }
       climber {
+        id
         added_at
         name
         home_country {
+          id
           name
         }
       }

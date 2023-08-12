@@ -29,7 +29,7 @@ const Dropdown = ({options, onChange}: DropdownProps) => {
             return setSelectedOption(options[e.target.selectedIndex].key)}}>
           {options.map(o => {
             return (
-            <option key={o.key} value={o.key}>{o.label}</option>
+                <option key={o.key} value={o.key}>{o.label}</option>
           )})}
         </select>
     );
