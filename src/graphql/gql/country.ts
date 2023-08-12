@@ -36,6 +36,8 @@ query Countries($order_by: [country_order_by!], $where: country_bool_exp, $limit
         id
         name
         crags {
+            id
+            name
             climbs {
                 id
                 name

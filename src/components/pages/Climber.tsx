@@ -18,10 +18,10 @@ const Climber = () => {
         <>
         <div>Name: {climber.name}</div>
         {climber.dob ?
-        (<div>Age: {getAge(climber.dob)}</div>)
+        (<div>Date of birth: {climber.dob} ({getAge(climber.dob)} years old)</div>)
         : <></>}
         <br></br>
-        <div>Ascents:{ascents.sort((a: AscentProps, b: AscentProps) =>
+        <div>Ascents ({ascents.length}):{ascents.sort((a: AscentProps, b: AscentProps) =>
             a._date ?
                 b._date ?
                     a._date.localeCompare(b._date.toString())
@@ -31,7 +31,7 @@ const Climber = () => {
             const date = ascent._date ? ascent._date : "Date unknown"
             return (
                 <div>
-                    <Link to={`/climbs/${ascent.climb.id}`}>{ascent.climb.name}</Link> 
+                    <Link to={`/climbs/${ascent.climb.id}`}>{ascent.climb.name} ({ascent.climb.grade})</Link> 
                     ({date})
                 </div>
                 

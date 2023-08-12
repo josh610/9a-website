@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 interface THeadProps {
-    columns: {key: string, label: string, path: string, sortable: boolean, filterable: boolean}[]
+    columns: {key: string, label: string, path: string, sortable?: boolean}[]
     handleSorting: (sorterQueries: any[], sortOrder: number) => any
 }
 

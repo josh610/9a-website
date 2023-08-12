@@ -2,7 +2,7 @@ import Dropdown from "../Dropdown"
 import { getValueFromPath } from "./common"
 
 interface TableFilterProps{
-    columns: {key: string, label: string, path: string, sortable: boolean}[]
+    columns: {key: string, label: string, path: string, filterable?: boolean}[]
     handleFilter: (filterQuery: any) => any
     data: any[]
   }
@@ -28,8 +28,8 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
 
     return (
         <div>
-            {columns.map(({ key, label, path }) => {
-                return (
+            {columns.map(({ key, path, filterable }) => {
+                if(filterable) return (
                     <Dropdown
                         key={key}
                         options={getFieldContent(path)}

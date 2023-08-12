@@ -3,7 +3,7 @@ import { getValueFromPath } from "./common"
 const Pluralize = require('pluralize')
 
 interface TBodyProps {
-    columns: {key: string, label: string, path: string, sortable: boolean, links: boolean}[]
+    columns: {key: string, label: string, path: string, links?: boolean}[]
     data: any[]
 }
 
