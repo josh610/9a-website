@@ -15,7 +15,17 @@
     float: left;
 }
 
-.Ascent{
+.MainContent{
+    width: 1000px;
+    top: 110px;
+    bottom: 70px;
+    left: 200px;
+    position: relative;
+    border: 1px solid black;
+    padding: 2px;
+}
+
+.Create{
     width: 1000px;
     top: 110px;
     bottom: 70px;
@@ -83,4 +93,9 @@
 .column{
     border: 1px solid black;
     border-collapse: collapse;
+}
+
+.githublink{
+    text-decoration: none;
+    color: yellow;
 }

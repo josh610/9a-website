@@ -1,24 +1,38 @@
 import React from 'react'
+import { useState } from 'react'
 import '../../styles/defaults.css'
 
 interface DropdownProps {
-    defaultValue: string
-    values: string[]
+    key: string
+    options: {
+        key: any
+        value: any
+        label: string
+    }[]
+    onChange?: (params: any) => any
 }
 
-const Dropdown = ({defaultValue, values}: DropdownProps) => {
+/**
+ * Dropdown menu which performs an action when an option is selected
+ * @param options array of JS Objects with properties {key: any, value: any, label: string} 
+ * @returns 
+ */
+const Dropdown = ({options, onChange}: DropdownProps) => {
+    const [selectedOption, setSelectedOption] = useState(options[0].key);
+
     return (
-        <div>
-            <select className="Dropdown">
-                <option value="none" selected>{defaultValue}</option>
-                {values.map(value => {
-                    return (
-                        <option value={value.toLowerCase()}>{value}</option>
-                    )
-                })}
-            </select>
-        </div>
-    )
-}
+        <select
+          className='Dropdown'
+          value={selectedOption}
+          onChange={e => {
+            if (onChange) onChange(options[e.target.selectedIndex].value)
+            return setSelectedOption(options[e.target.selectedIndex].key)}}>
+          {options.map(o => {
+            return (
+                <option key={o.key} value={o.key}>{o.label}</option>
+          )})}
+        </select>
+    );
+  };
 
 export default Dropdown
