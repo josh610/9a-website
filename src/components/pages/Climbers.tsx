@@ -1,7 +1,6 @@
-
+import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { QUERY_ALL_CLIMBERS } from '../../graphql/gql/climber'
-import '../../styles/defaults.css'
 import Table from '../ui/Table/Table'
 
 const Climbers = () => {

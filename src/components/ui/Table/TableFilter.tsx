@@ -1,3 +1,4 @@
+import React from 'react'
 import Dropdown from "../Dropdown"
 import { getValueFromPath } from "./common"
 
@@ -23,20 +24,19 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
     }
 
     return (
-        <div>
+        <div className="flex">
             {columns.map(({ key, label, path, filterable }) => {
                 if(filterable) return (
-                    <>
+                    <div key={key}>
                     {label}
                     <Dropdown
-                        key={key}
                         options={getFieldContent(path)}
                         onChange={e => handleFilter(
                             e == "none" ?
                             {where: {}} :
                             getFilterQuery(path, e))}
                     />
-                    </>
+                    </div>
                 )
             })}
         </div>

@@ -1,20 +1,14 @@
-import '../../styles/defaults.css'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import SidebarButton from '../ui/SidebarButton'
 
 const Sidebar = () => {
     return (
-        <div className='Sidebar'>
-            <div className='box'>Historic Ascents</div>
-            <div className='box'>
-                <Link to='/ascents'>All Ascents</Link>
-            </div>
-            <div className='box'>
-                <Link to='/climbs'>Climbs</Link>
-            </div>
-            <div className='box'>
-                <Link to='/climbers'>Climbers</Link>
-            </div>
-            <div className='box'>Add new ascent</div>
+        <div className="flex-none w-32 bg-blue-400">
+            <SidebarButton link={''} label={'Historic Ascents'}/>
+            <SidebarButton link={'/ascents'} label={'All Ascents'}/>
+            <SidebarButton link={'/climbs'} label={'Climbs'}/>
+            <SidebarButton link={'/climbers'} label={'Climbers'}/>
+            <SidebarButton link={''} label={'Add New Ascent'}/>
         </div>
     )
 }

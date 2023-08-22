@@ -1,3 +1,4 @@
+import React from 'react'
 import { Link } from "react-router-dom"
 import { getValueFromPath } from "./common"
 const Pluralize = require('pluralize')
@@ -9,11 +10,16 @@ interface TBodyProps {
 }
 
 const TableBody = ({ columns, data, limit }: TBodyProps) => {
+    var colorRow = false
+
     return (
         <tbody>
             {data.map(d => {
+                const cName = colorRow ? "bg-slate-200" : ""
+                colorRow = !colorRow
                 return (
-                    <tr className='row' key={d.id}>
+                    <tr className={cName}
+                        key={d.id}>
                         {columns.map(col => {
                             const name = getValueFromPath(col.path, d)
                             const page = Pluralize(col.key)
@@ -24,10 +30,10 @@ const TableBody = ({ columns, data, limit }: TBodyProps) => {
                             const id = getValueFromPath(idPathStrings.join('.'), d)
                             
                             return (
-                                <td className='column' key={col.key}>
+                                <td key={col.key}>
                                     {
                                         col.links ?
-                                        <Link to={`/${page}/${id}`}>{name}</Link> :
+                                        <Link className=" font-medium" to={`/${page}/${id}`}>{name}</Link> :
                                         name
                                     }
                                 </td>

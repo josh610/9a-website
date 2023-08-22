@@ -1,12 +1,9 @@
-import React, { Component } from 'react'
-import '../../styles/defaults.css'
+import React from 'react'
 
-class Footer extends Component {
-    render() {
-        return (
-            <footer className='Footer'>Copyright Josh Zimmerman 2023</footer>
-        )
-    }
+const Footer = () => {
+    return (
+        <div className="h-32 bg-black text-center text-white">Copyright Josh Zimmerman 2023</div>
+    )
 }
 
 export default Footer

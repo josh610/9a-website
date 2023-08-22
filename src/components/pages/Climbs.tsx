@@ -1,7 +1,6 @@
-
+import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { QUERY_ALL_CLIMBS } from '../../graphql/gql/climb'
-import '../../styles/defaults.css'
 import Table from '../ui/Table/Table'
 
 const Climbs = () => {
@@ -20,7 +19,7 @@ const Climbs = () => {
             { key: "climb", label: "Name", path: "name", sortable: true, filterable: true, links: true},
             { key: "grade", label: "Grade", path: "grade", sortable: true, filterable: true},
             { key: "crag", label: "Crag", path: "crag.name", sortable: true, filterable: true, links: true},
-            { key: "country", label: "Country", path: "crag.country.name", sortable: true, filterable: true}
+            { key: "country", label: "Country", path: "crag.country.name", sortable: true, filterable: true, links:true}
             //{ key: "5", label: "Number of ascents", path: "", sortable: true, filterable: true},
             //{ key: "6", label: "Fa", path: "_date", sortable: true, filterable: true}
           ]}

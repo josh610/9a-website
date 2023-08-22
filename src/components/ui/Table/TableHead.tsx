@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from 'react'
 
 interface THeadProps {
     columns: {key: string, label: string, path: string, sortable?: boolean}[]
@@ -25,8 +25,11 @@ const TableHead = ({ columns, handleSorting }: THeadProps) => {
           {columns.map(({ key, label, sortable, path }) => {
             const lbl = label + (sortField == key ? sortDisplayIcons[order] : "")
             return (
-              <th key={key} onClick={() => sortable ? handleSortingChange(key, getSorterQueries(path)) : {}}>
-                {lbl}
+              <th
+                className=""
+                key={key}
+                onClick={() => sortable ? handleSortingChange(key, getSorterQueries(path)) : {}}>
+                  {lbl}
               </th>
             );
           })}

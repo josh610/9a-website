@@ -1,11 +1,12 @@
-import '../../styles/defaults.css'
+import React from 'react'
 
 const Header = () => {
     return (
-        <h1 className='Header'>
-            <center>9a Ascents</center>
-            <a className="githublink" href="https://github.com/josh610/9a-database">GitHub</a>
-        </h1>
+        <div className="flex items-center h-20 bg-slate-400">
+            <a className="grow font-bold"
+                href="https://github.com/josh610/9a-database">GitHub</a>
+            <div className="grow text-yellow-300 font-bold">9a Ascents</div>
+        </div>
     )
 }
 
