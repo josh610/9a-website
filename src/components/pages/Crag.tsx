@@ -32,7 +32,7 @@ const Crag = () => {
             .map((climb: ClimbProps) => {
                 return (
                     <div>
-                        <Link to={`/climbs/${climb.id}`}>{climb.name}</Link> 
+                        <Link to={`/climbs/${climb.id}`}>{climb.name}</Link> ({climb.grade})
                     </div>
                 )
             })}

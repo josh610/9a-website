@@ -17,21 +17,21 @@ interface DropdownProps {
  * @param options array of JS Objects with properties {key: any, value: any, label: string} 
  * @returns 
  */
-const Dropdown = ({options, onChange}: DropdownProps) => {
+const Dropdown = ({key, options, onChange}: DropdownProps) => {
     const [selectedOption, setSelectedOption] = useState(options[0].key);
 
     return (
-        <select
-          className='Dropdown'
-          value={selectedOption}
-          onChange={e => {
-            if (onChange) onChange(options[e.target.selectedIndex].value)
-            return setSelectedOption(options[e.target.selectedIndex].key)}}>
-          {options.map(o => {
-            return (
-                <option key={o.key} value={o.key}>{o.label}</option>
-          )})}
-        </select>
+      <select
+        className='Dropdown'
+        value={selectedOption}
+        onChange={e => {
+          if (onChange) onChange(options[e.target.selectedIndex].value)
+          return setSelectedOption(options[e.target.selectedIndex].key)}}>
+        {options.map(o => {
+          return (
+              <option key={o.key} value={o.key}>{o.label}</option>
+        )})}
+      </select>
     );
   };
 

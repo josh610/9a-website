@@ -1,18 +1,28 @@
 import '../../styles/defaults.css'
 import { Link, useParams } from 'react-router-dom'
-import { useQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import { QUERY_ALL_COUNTRIES } from '../../graphql/gql/country'
 import { ClimberProps } from '../../graphql/gql/climber'
 import { CragProps } from '../../graphql/gql/crag'
 
 const Country = () => {
     const { id } = useParams()
-    const {loading, error, data, refetch} = useQuery(QUERY_ALL_COUNTRIES, {variables: {where: {id: {_eq: id}}}})
+    const CLIMBS_COUNT_QUERY = gql(
+        `query Climbs_Count {
+            climb_aggregate(where: {crag: {country: {id: {_eq: ${id}}}}}) {
+                aggregate {
+                    count
+                }
+            }
+        }`
+    )
+    const {loading: countryLoading, error: countryError, data: countryData} = useQuery(QUERY_ALL_COUNTRIES, {variables: {where: {id: {_eq: id}}}})
+    const {loading: climbsLoading, error: climbsError, data: climbsData} = useQuery(CLIMBS_COUNT_QUERY)
 
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error : {error.message}</p>
+    if (countryLoading) return <p>Loading...</p>
+    if (countryError) return <p>Error : {countryError.message}</p>
 
-    const country = data.country[0]
+    const country = countryData.country[0]
     const crags = [...country.crags]
     const climbers = [...country.climbers]
 
@@ -27,6 +37,10 @@ const Country = () => {
             </>)
             : (<></>)
         }
+        <div>
+            {climbsLoading ? climbsError ? (<p>Error : {climbsError.message}</p>) : (<p>Loading...</p>) : `${climbsData.climb_aggregate.aggregate.count} Climbs`}
+        </div>
+        <br/>
         <div>Crags:{crags.sort((a: CragProps, b: CragProps) => a.name.localeCompare(b.name.toString()))
             .map((crag: CragProps) => {
                 return (

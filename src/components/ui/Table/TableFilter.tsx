@@ -28,8 +28,10 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
 
     return (
         <div>
-            {columns.map(({ key, path, filterable }) => {
+            {columns.map(({ key, label, path, filterable }) => {
                 if(filterable) return (
+                    <>
+                    {label}
                     <Dropdown
                         key={key}
                         options={getFieldContent(path)}
@@ -38,6 +40,7 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
                             {where: {}} :
                             getFilterQuery(path, e))}
                     />
+                    </>
                 )
             })}
         </div>
