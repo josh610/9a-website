@@ -2,7 +2,7 @@ import { useState } from "react";
 
 interface THeadProps {
     columns: {key: string, label: string, path: string, sortable?: boolean}[]
-    handleSorting: (sorterQueries: any[], sortOrder: number) => any
+    handleSorting: (sorterQueries: any[]) => any
 }
 
 
@@ -16,7 +16,7 @@ const TableHead = ({ columns, handleSorting }: THeadProps) => {
         key == sortField ? (order + 1) % 3 : 1
       setSortField(key)
       setOrder(sortOrder)
-      handleSorting(sorterQueries, sortOrder)
+      handleSorting(sorterQueries[sortOrder])
     }
   
     return (
