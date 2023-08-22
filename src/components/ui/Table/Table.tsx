@@ -4,6 +4,7 @@ import TableHead from "./TableHead"
 import { DocumentNode } from "graphql"
 import { useQuery } from "@apollo/client"
 import TableFilter from "./TableFilter"
+import Dropdown from "../Dropdown"
 
 
 interface TableProps {
@@ -20,7 +21,7 @@ interface TableProps {
  * Table from database query with options to sort, filter and limit query results
  */
 const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, queryLimits }: TableProps) => {
-    const [queryLimit, setQueryLimit] = useState<Number>(queryLimits[0])
+    const [limit, setLimit] = useState<number>(queryLimits[0])
     const [filter, setFilter] = useState(queryFilterMap)
 
     const {loading, error, data, refetch} = useQuery(query, {variables: queryVariables})
@@ -28,21 +29,26 @@ const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, quer
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error : {error.message}</p>
 
-    const handleSorting = (sorterQueries: any[], sortOrder: number) => {
-        refetch(sorterQueries[sortOrder])
-    }
-
-    const handleFilter = (filterQuery: any) => {
-        refetch(filterQuery)
-    }
-
     return (
         <>
-            <TableFilter columns={columns} handleFilter={handleFilter} data={data[queryName]}/>
+            Limit:
+            <Dropdown
+                key={"limit"}
+                options={queryLimits.map(l => {
+                    return {
+                        key: l,
+                        value: l,
+                        label: l.toString()
+                    }
+                })}
+                onChange={e => {
+                    setLimit(e)
+                }}
+            />
+            <TableFilter columns={columns} handleFilter={refetch} data={data[queryName]}/>
             <table>
-                
-                <TableHead columns={columns} handleSorting={handleSorting} />
-                <TableBody columns={columns} data={data[queryName]} />
+                <TableHead columns={columns} handleSorting={refetch}/>
+                <TableBody columns={columns} data={data[queryName]} limit={limit}/>
             </table>
         </>
     )

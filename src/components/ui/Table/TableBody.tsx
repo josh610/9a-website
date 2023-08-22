@@ -5,9 +5,10 @@ const Pluralize = require('pluralize')
 interface TBodyProps {
     columns: {key: string, label: string, path: string, links?: boolean}[]
     data: any[]
+    limit: number
 }
 
-const TableBody = ({ columns, data }: TBodyProps) => {
+const TableBody = ({ columns, data, limit }: TBodyProps) => {
     return (
         <tbody>
             {data.map(d => {
@@ -20,7 +21,6 @@ const TableBody = ({ columns, data }: TBodyProps) => {
                             // get path to ID
                             const idPathStrings = col.path.split('.')
                             idPathStrings[idPathStrings.length - 1] = "id"
-                            console.log(idPathStrings.join('.'))
                             const id = getValueFromPath(idPathStrings.join('.'), d)
                             
                             return (
@@ -35,7 +35,8 @@ const TableBody = ({ columns, data }: TBodyProps) => {
                         })}
                     </tr>
                 )
-            })}
+            })
+            .slice(0, limit)}
         </tbody>
     )
 }

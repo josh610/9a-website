@@ -21,10 +21,6 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
             })
         )
     }
-  
-    const handleFilterChange = (filterQuery: any) => {
-      handleFilter(filterQuery)
-    }
 
     return (
         <div>
@@ -35,7 +31,7 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
                     <Dropdown
                         key={key}
                         options={getFieldContent(path)}
-                        onChange={e => handleFilterChange(
+                        onChange={e => handleFilter(
                             e == "none" ?
                             {where: {}} :
                             getFilterQuery(path, e))}
