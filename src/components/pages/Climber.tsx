@@ -1,4 +1,4 @@
-import '../../styles/defaults.css'
+import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { QUERY_ALL_CLIMBERS } from '../../graphql/gql/climber'

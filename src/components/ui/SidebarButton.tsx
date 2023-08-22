@@ -1,14 +1,24 @@
-import '../../styles/defaults.css'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-/**
- * Dropdown menu which performs an action when an option is selected
- * @param options array of JS Objects with properties {key: any, value: any, label: string} 
- * @returns 
- */
-const SidebarButton = () => {
-    return (
-        <></>
-    )
+interface SidebarButtonProps {
+  link: string
+  label: string
+}
+
+const SidebarButton = ({ link, label }: SidebarButtonProps) => {
+  let navigate = useNavigate()
+  const routeChange = () => {
+    navigate(link)
   }
+
+  return (
+    <div className="h-10 hover:bg-blue-500 hover:cursor-pointer">
+      <button className="font-bold" onClick={routeChange}>
+        {label}
+      </button>
+    </div>
+  )
+}
 
 export default SidebarButton

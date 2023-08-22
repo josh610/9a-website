@@ -3,7 +3,6 @@ import { useState } from 'react'
 import '../../styles/defaults.css'
 
 interface DropdownProps {
-    key: string
     options: {
         key: any
         value: any
@@ -17,12 +16,11 @@ interface DropdownProps {
  * @param options array of JS Objects with properties {key: any, value: any, label: string} 
  * @returns 
  */
-const Dropdown = ({key, options, onChange}: DropdownProps) => {
-    const [selectedOption, setSelectedOption] = useState(options[0].key);
+const Dropdown = ({ options, onChange }: DropdownProps) => {
+    const [selectedOption, setSelectedOption] = useState(options[0].key)
 
     return (
-      <select
-        className='Dropdown'
+      <select className="border-2"
         value={selectedOption}
         onChange={e => {
           if (onChange) onChange(options[e.target.selectedIndex].value)

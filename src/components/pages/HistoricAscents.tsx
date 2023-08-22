@@ -1,5 +1,5 @@
+import React from 'react'
 import {  QUERY_ALL_ASCENTS } from '../../graphql/gql/ascent'
-import '../../styles/defaults.css'
 import Table from '../ui/Table/Table'
 
 const HistoricAscents = () => {

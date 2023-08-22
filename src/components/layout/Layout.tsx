@@ -9,13 +9,15 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div>
-      <Header />
-      <Sidebar />
-      <div className='MainContent'>
-        {children}
+    <div className="flex flex-col">
+      <Header/>
+      <div className="flex">
+        <Sidebar/>
+        <div className="p-2">
+          {children}
+        </div>
       </div>
-      <Footer />
+      <Footer/>
     </div>
   )
 }

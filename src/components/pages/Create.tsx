@@ -1,6 +1,4 @@
-import { useState } from 'react'
-import { gql } from '@apollo/client'
-import '../../styles/defaults.css'
+import React, { useState } from 'react'
 import { graphqlClient } from '../../graphql/Client'
 import { QUERY_ALL_CLIMBS } from '../../graphql/gql/climb'
 import { QUERY_ALL_CLIMBERS } from '../../graphql/gql/climber'

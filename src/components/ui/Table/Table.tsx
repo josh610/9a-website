@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from "react"
 import TableBody from "./TableBody"
 import TableHead from "./TableHead"
@@ -30,10 +31,9 @@ const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, quer
     if (error) return <p>Error : {error.message}</p>
 
     return (
-        <>
+        <div>
             Limit:
             <Dropdown
-                key={"limit"}
                 options={queryLimits.map(l => {
                     return {
                         key: l,
@@ -46,11 +46,11 @@ const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, quer
                 }}
             />
             <TableFilter columns={columns} handleFilter={refetch} data={data[queryName]}/>
-            <table>
+            <table className="">
                 <TableHead columns={columns} handleSorting={refetch}/>
                 <TableBody columns={columns} data={data[queryName]} limit={limit}/>
             </table>
-        </>
+        </div>
     )
 }
 export default Table

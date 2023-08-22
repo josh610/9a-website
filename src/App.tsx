@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Ascents from './components/pages/Ascents'
 import Layout from './components/layout/Layout'
-import './App.css'
+import './styles/global.css'
 import Create from './components/pages/Create'
 import Climbs from './components/pages/Climbs'
 import Climb from './components/pages/Climb'
