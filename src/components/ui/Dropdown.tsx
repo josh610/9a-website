@@ -3,24 +3,26 @@ import Select from 'react-select'
 
 
 interface DropdownProps {
-    options: {
-        key: any
-        value: any
-        label: string
-    }[]
-    onChange?: (params: any) => any
+  placeholder?: string
+  options: {
+      key: any
+      value: any
+      label: string
+  }[]
+  onChange?: (params: any) => any
 }
 
 /**
- * Dropdown menu which performs an action when an option is selected
+ * Searchable dropdown menu which performs an action when an option is selected
  * @param options array of JS Objects with properties {key: any, value: any, label: string} 
  * @returns 
  */
-const Dropdown = ({ options, onChange }: DropdownProps) => {
+const Dropdown = ({ placeholder, options, onChange }: DropdownProps) => {
     return (
-      <Select className="border-2 w-fit"
+      <Select className="w-fit"
+        placeholder={placeholder ? placeholder : "Select..."}
         options={options}
-        defaultValue={options[0]}
+        defaultValue={null}
         onChange={e => {if (onChange) onChange(e?.value)}}
       />
     );

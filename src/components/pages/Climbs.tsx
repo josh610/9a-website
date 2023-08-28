@@ -13,7 +13,6 @@ const Climbs = () => {
     </div>
     <br></br>
     <div>
-        Climbs
         <Table
           columns={[
             { key: "climb", label: "Name", path: "name", sortable: true, filterable: true, links: true},

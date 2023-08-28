@@ -30,7 +30,7 @@ const TableBody = ({ columns, data, limit }: TBodyProps) => {
                             const id = getValueFromPath(idPathStrings.join('.'), d)
                             
                             return (
-                                <td key={col.key}>
+                                <td className="border-2 border-black" key={col.key}>
                                     {
                                         col.links ?
                                         <Link className=" font-medium" to={`/${page}/${id}`}>{name}</Link> :

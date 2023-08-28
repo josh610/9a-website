@@ -26,7 +26,7 @@ const TableHead = ({ columns, handleSorting }: THeadProps) => {
             const lbl = label + (sortField == key ? sortDisplayIcons[order] : "")
             return (
               <th
-                className=""
+                className="hover:font-extrabold"
                 key={key}
                 onClick={() => sortable ? handleSortingChange(key, getSorterQueries(path)) : {}}>
                   {lbl}

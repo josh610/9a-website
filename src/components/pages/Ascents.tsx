@@ -8,12 +8,11 @@ const Ascents = () => {
 
   return (
     <div>
-      <div>
+      <center>
         {loading ? error ? (<p>Error : {error.message}</p>) : (<p>Loading...</p>) : `${data.ascent_aggregate.aggregate.count} Ascents`}
-      </div>
+      </center>
       <br></br>
       <div>
-          Ascents
           <Table
             columns={[
               { key: "climber", label: "Climber", path: "climber.name", sortable: true, filterable: true, links: true},

@@ -22,6 +22,15 @@ export interface AscentProps{
   proposedGrade?: string
   _date?: string
   fa?: boolean
+  ascent_media?: {
+    id: number
+    media: {
+      id: number
+      type: string
+      label: string
+      url: string
+    }
+}
 }
 
 export const QUERY_ALL_ASCENTS = gql`
@@ -54,6 +63,15 @@ export const QUERY_ALL_ASCENTS = gql`
       }
       fa
       _date
+      ascent_media {
+        id
+        media {
+            id
+            type
+            label
+            url
+        }
+      }
     }
   }
   `
