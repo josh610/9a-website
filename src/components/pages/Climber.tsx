@@ -20,7 +20,7 @@ const Climber = () => {
     console.log(event.toString());
 
     return (
-        <div className="w-screen">
+        <div>
             <Link
                 className="text-right"
                 to={`/climbers/${id}/edit`}>

@@ -15,23 +15,21 @@ import './styles/global.css'
 
 const App = () => {
   return (
-    <div>
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path='/' Component={Home}/>
-            <Route path='/ascents' Component={Ascents}/>
-            <Route path='/climbs' Component={Climbs}/>
-            <Route path="/climbs/:id" Component={Climb}/>
-            <Route path='/climbers' Component={Climbers}/>
-            <Route path="/climbers/:id" Component={Climber}/>
-            <Route path="/crags/:id" Component={Crag}/>
-            <Route path="/countries/:id" Component={Country}/>
-            <Route path="/climbers/:id/edit" Component={EditClimber}/>
-          </Routes>
-        </Layout>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path='/' Component={Home}/>
+          <Route path='/ascents' Component={Ascents}/>
+          <Route path='/climbs' Component={Climbs}/>
+          <Route path="/climbs/:id" Component={Climb}/>
+          <Route path='/climbers' Component={Climbers}/>
+          <Route path="/climbers/:id" Component={Climber}/>
+          <Route path="/crags/:id" Component={Crag}/>
+          <Route path="/countries/:id" Component={Country}/>
+          <Route path="/climbers/:id/edit" Component={EditClimber}/>
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   )
 }
 

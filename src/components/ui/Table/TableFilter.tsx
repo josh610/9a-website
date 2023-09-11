@@ -24,7 +24,7 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
     }
 
     return (
-        <div className="flex w-screen">
+        <div className="flex">
             {columns.map(({ key, label, path, filterable }) => {
                 if(filterable) return (
                     <div

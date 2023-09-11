@@ -55,7 +55,7 @@ const Edit = (props: EditProps) => {
     var colorRow = false
 
     return (
-        <div className="w-screen">
+        <div>
             <button className="border-black border-2 p-1" onClick={() => navigate(`/climbers/${id}`)}>Back</button>
             <br/><br/>
 
