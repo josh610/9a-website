@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
-import { AscentPropProps } from './pages/edit/EditClimber'
 import { gql } from '@apollo/client'
-import { graphqlClient } from '../graphql/Client'
+import { graphqlClient } from '../../../graphql/Client'
+import { AscentProps } from '../../../graphql/gql/ascent'
 
-interface EditAscentDateProps {
-    ascent: AscentPropProps
+interface EditAscentDateFaProps {
+    ascent: AscentProps
     handleChange: () => any
 }
 
-const EditAscentDate = ({ ascent, handleChange }: EditAscentDateProps) => {
+const EditAscentDateFa = ({ ascent, handleChange }: EditAscentDateFaProps) => {
     const [dateInput, setDateInput] = useState<string>("")
     const [dateChanged, setDateChanged] = useState<boolean>(false)
-    const date = ascent.date ? ascent.date : "Date unknown"
+    const date = ascent._date ? ascent._date : "Date unknown"
 
     return (
         <div>
-            {ascent.climb} ({ascent.grade}): 
+            {ascent.climb.name} ({ascent.climb.grade}): 
             <input
                 type="text"
                 id={"date" + ascent.id}
@@ -61,4 +61,4 @@ const EditAscentDate = ({ ascent, handleChange }: EditAscentDateProps) => {
     )
 }
 
-export default EditAscentDate
+export default EditAscentDateFa

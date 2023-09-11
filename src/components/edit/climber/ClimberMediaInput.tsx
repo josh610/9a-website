@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import Dropdown from './ui/Dropdown'
+import Dropdown from '../../ui/Dropdown'
 import { gql, useQuery } from '@apollo/client'
-import { graphqlClient } from '../graphql/Client'
-import { ClimbProps, QUERY_ALL_CLIMBS } from '../graphql/gql/climb'
+import { graphqlClient } from '../../../graphql/Client'
+import { ClimbProps, QUERY_ALL_CLIMBS } from '../../../graphql/gql/climb'
 
 interface MediaInputProps {
     climberId: number
     handleChange: () => any
 }
 
-const NewMediaInput = ({ climberId, handleChange }: MediaInputProps) => {
+const ClimberMediaInput = ({ climberId, handleChange }: MediaInputProps) => {
     const [mediaLabelInput, setMediaLabelInput] = useState<string>("")
     const [mediaUrlInput, setMediaUrlInput] = useState<string>("")
 
@@ -120,4 +120,4 @@ const NewMediaInput = ({ climberId, handleChange }: MediaInputProps) => {
     )
 }
 
-export default NewMediaInput
+export default ClimberMediaInput

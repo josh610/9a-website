@@ -30,7 +30,7 @@ export interface AscentProps{
       label: string
       url: string
     }
-}
+  }[]
 }
 
 export const QUERY_ALL_ASCENTS = gql`

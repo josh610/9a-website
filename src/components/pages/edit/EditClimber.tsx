@@ -1,29 +1,21 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ApolloQueryResult, gql, useQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import { graphqlClient } from '../../../graphql/Client'
 import { MediaProps } from '../../../graphql/gql/media'
-import EditAscentDate from '../../EditAscentDate'
-import { AscentProps } from '../../../graphql/gql/ascent'
-import Dropdown from '../../ui/Dropdown'
+import EditAscentDate from '../../edit/climber/EditAscentDateFa'
+import { AscentProps, QUERY_ALL_ASCENTS } from '../../../graphql/gql/ascent'
 import { QUERY_ALL_CLIMBERS } from '../../../graphql/gql/climber'
-import { ClimbProps, QUERY_ALL_CLIMBS } from '../../../graphql/gql/climb'
-import NewMediaInput from '../../NewMediaInput'
+import ClimberMediaInput from '../../edit/climber/ClimberMediaInput'
+import AscentMediaInput from '../../edit/ascent/AscentMediaInput'
 
 
 interface EditProps {
     name: string
     dob: string
-    ascents: AscentPropProps[]
+    ascents: AscentProps[]
     media: MediaProps[]
     handleChange: () => any
-}
-
-export interface AscentPropProps {
-    id: number
-    climb: string
-    grade: string
-    date: string
 }
 
 const EditClimber = () => {
@@ -40,9 +32,7 @@ const EditClimber = () => {
         <Edit
             name={climber.name}
             dob={climber.dob}
-            ascents={climber.ascents.map((ascent: AscentProps) => {
-                return {id: ascent.id, climb: ascent.climb.name, grade: ascent.climb.grade, date: ascent._date}
-            })}
+            ascents={climber.ascents}
             media={climber.climber_media}
             handleChange={refetch}
         />
@@ -61,24 +51,8 @@ const Edit = (props: EditProps) => {
     const navigate = useNavigate()
 
     const { id } = useParams()
-    
-    /*
-    const [climbsList, setClimbsList] = useState<{key: any, value: any, label: string}[]>([{key: null, value: null, label: ""}])
-    
-    graphqlClient.query({query: QUERY_ALL_CLIMBS})
-        .then(rs => {
-            console.log(rs.data)
-            setClimbsList(
-                rs.data?.climb.map((climb: ClimbProps) => {
-                    return {
-                        key: climb.id,
-                        value: climb.id,
-                        label: climb.name
-                    }
-                })
-            )
-        })
-    */
+
+    var colorRow = false
 
     return (
         <div className="w-screen">
@@ -152,15 +126,18 @@ const Edit = (props: EditProps) => {
             {/** Ascents **/}
             <div className="border-black border-2">
                 <div className="font-bold">Ascents ({props.ascents.length}):</div>
-                <div>{props.ascents.sort((a: AscentPropProps, b: AscentPropProps) =>
-                    a.date ?
-                        b.date ?
-                            a.date.localeCompare(b.date.toString())
+                <div>{[...props.ascents].sort((a: AscentProps, b: AscentProps) =>
+                    a._date ?
+                        b._date ?
+                            a._date.localeCompare(b._date.toString())
                         : 1
                     : -1)
-                .map((ascent: AscentPropProps) => {
+                .map((ascent: AscentProps) => {
+                    const color = colorRow ? "" : "bg-slate-200"
+                    colorRow = !colorRow
+
                     return (
-                        <EditAscentDate ascent={ascent} handleChange={props.handleChange}/>
+                        <AscentInfo id={ascent.id} handleChange={props.handleChange} rowColor={color}/>
                     )
                 })}
                 </div>
@@ -207,7 +184,7 @@ const Edit = (props: EditProps) => {
                     {
                         addMedia
                         ?
-                        <NewMediaInput
+                        <ClimberMediaInput
                             climberId={Number(id)}
                             handleChange={() => {
                                 setAddMedia(false)
@@ -221,75 +198,35 @@ const Edit = (props: EditProps) => {
                             Add media
                         </button>
                     }
-
-                    
-
-                    {/*
-                    <input
-                        className="border-gray-400 border-2"
-                        type="text"
-                        id={"media"}
-                        placeholder="Title"
-                        onChange={e => {
-                            setMediaLabelInput(e.target.value)
-                        }}
-                    />
-                    <input
-                        className="border-gray-400 border-2"
-                        type="text"
-                        id={"media"}
-                        placeholder="Url"
-                        onChange={e => {
-                            setMediaUrlInput(e.target.value)
-                        }}
-                    />
-                    <Dropdown
-                        options={climbsList}
-                        placeholder="Climb?"
-                        onChange={() => {}}/>
-                    <button
-                        className={mediaLabelInput == "" || mediaUrlInput == "" ? "border-gray-500 border-2 text-gray-400 p-1 pointer-events-none" : "border-black border-2 p-1"}
-                        onClick={() => {
-
-                            const mutation = gql`
-                                mutation UpsertClimberMedia($media: [climber_media_insert_input!]!) {
-                                    insert_climber_media(objects: $media, on_conflict: {constraint: climber_media_climber_id_media_id_key}) {
-                                        affected_rows
-                                    }
-                                }
-                            `
-
-                            const variables = {
-                                media: {
-                                    media: {
-                                        data: {
-                                            label: mediaLabelInput,
-                                            type: "youtube",
-                                            url: mediaUrlInput
-                                        },
-                                        on_conflict: {
-                                            constraint: "media_url_key",
-                                            update_columns: "url"
-                                        }
-                                    },
-                                    climber_id: id
-                                }
-                            }
-                            
-                            graphqlClient.mutate({mutation: mutation, variables: variables})
-                            .then(rs => {
-                                alert(rs.data?.insert_climber_media.affected_rows + " row(s) updated")
-                            })
-                            .then(props.handleChange)
-
-                            setMediaLabelInput("")
-                            setMediaUrlInput("")
-                        }}
-                        >Add
-                    </button>
-                    */}
                 </div>
             </div>
+        </div>
+    )
+}
+
+interface AscentInfoProps {
+    id: number
+    handleChange: () => any
+    rowColor: string
+}
+
+const AscentInfo = ({ id, handleChange, rowColor }: AscentInfoProps) => {
+    const {loading, error, data} = useQuery(QUERY_ALL_ASCENTS, {variables: {where: {id: {_eq: id}}}})
+
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>Error : {error.message}</p>
+
+    const ascent = data.ascent[0]
+
+    return (
+        <div className={rowColor}>
+            <EditAscentDate ascent={ascent} handleChange={handleChange}/>
+            <>
+                {ascent.ascent_media?.map((ascentMedia: MediaProps) => {
+                    return <div>*{ascentMedia.media.url}</div>
+                })}
+            </>
+            <AscentMediaInput ascent={ascent} handleChange={handleChange}/>
         </div>
     )
 }

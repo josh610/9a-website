@@ -16,6 +16,9 @@ const Climber = () => {
     const climber = data.climber[0]
     const ascents = [...climber.ascents]
 
+    const event = new Date('2011/10');
+    console.log(event.toString());
+
     return (
         <div className="w-screen">
             <Link
@@ -23,13 +26,21 @@ const Climber = () => {
                 to={`/climbers/${id}/edit`}>
             Edit this page
             </Link>
+            <br/><br/>
+            
+            <div className="flex">
+                <div>
+                    <div>Name: {climber.name}</div>
 
-            <div>Name: {climber.name}</div>
-
-            {climber.dob ?
-            (<div>Date of birth: {new Date(climber.dob).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })} ({getAge(climber.dob)} years old)</div>)
-            : <></>}
-            <br></br>
+                    {climber.dob ?
+                    (<div>Date of birth: {new Date(climber.dob).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })} ({getAge(climber.dob)} years old)</div>)
+                    : <></>}
+                    <br></br>
+                </div>
+                <div className="flex items-end justify-end w-5/12">
+                    <img className="w-full" src={require('../../assets/ROCKCLIMB.jpg')}></img>
+                </div>
+            </div>
 
             <div>
             Ascents ({ascents.length}):{ascents.sort((a: AscentProps, b: AscentProps) =>
@@ -44,6 +55,18 @@ const Climber = () => {
                     <div>
                         <Link to={`/climbs/${ascent.climb.id}`}>{ascent.climb.name} ({ascent.climb.grade})</Link> 
                         ({date})
+                        {
+                            ascent.ascent_media
+                            ?
+                            <>
+                            (Videos: {ascent.ascent_media?.map((ascentMedia: MediaProps) => {
+                                return ascentMedia.media.url + ", "
+                            })})
+                            </>
+                            :
+                            <></>
+                        }
+                        
                     </div>
                     
                 )

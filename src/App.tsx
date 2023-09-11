@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './components/pages/Home'
 import Ascents from './components/pages/Ascents'
 import Layout from './components/layout/Layout'
 import Climbs from './components/pages/Climbs'
@@ -18,7 +19,7 @@ const App = () => {
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path='/' Component={null}/>
+            <Route path='/' Component={Home}/>
             <Route path='/ascents' Component={Ascents}/>
             <Route path='/climbs' Component={Climbs}/>
             <Route path="/climbs/:id" Component={Climb}/>

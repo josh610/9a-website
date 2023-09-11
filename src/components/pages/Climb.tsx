@@ -34,7 +34,7 @@ const Climb = () => {
                 : (<></>)
             }
             <div>
-                Ascents:{ascents.sort((a: AscentProps, b: AscentProps) =>
+                Ascents: ({ascents.length}){ascents.sort((a: AscentProps, b: AscentProps) =>
                     a._date ?
                         b._date ?
                             a._date.localeCompare(b._date.toString())
