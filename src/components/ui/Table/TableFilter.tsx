@@ -24,18 +24,21 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
     }
 
     return (
-        <div className="flex">
+        <div className="flex w-screen">
             {columns.map(({ key, label, path, filterable }) => {
                 if(filterable) return (
-                    <div key={key}>
-                    {label}
-                    <Dropdown
-                        options={getFieldContent(path)}
-                        onChange={e => handleFilter(
-                            e == "none" ?
-                            {where: {}} :
-                            getFilterQuery(path, e))}
-                    />
+                    <div
+                        className="w-fit text-center"
+                        key={key}
+                    >
+                        {label}
+                        <Dropdown
+                            options={getFieldContent(path)}
+                            onChange={e => handleFilter(
+                                e == "none" ?
+                                {where: {}} :
+                                getFilterQuery(path, e))}
+                        />
                     </div>
                 )
             })}

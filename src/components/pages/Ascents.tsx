@@ -3,17 +3,29 @@ import { gql, useQuery } from '@apollo/client'
 import {  QUERY_ALL_ASCENTS } from '../../graphql/gql/ascent'
 import Table from '../ui/Table/Table'
 
-const Ascents = () => {
+
+const NumberOfAscents = () => {
   const {loading, error, data} = useQuery(gql`query Ascents {ascent_aggregate {aggregate {count}}}`)
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error : {error.message}</p>
 
   return (
     <div>
-      <div>
-        {loading ? error ? (<p>Error : {error.message}</p>) : (<p>Loading...</p>) : `${data.ascent_aggregate.aggregate.count} Ascents`}
-      </div>
+      {`${data.ascent_aggregate.aggregate.count} Ascents`}
+    </div>
+  )
+}
+
+
+const Ascents = () => {
+  return (
+    <div>
+      <center>
+        <NumberOfAscents/>
+      </center>
       <br></br>
       <div>
-          Ascents
           <Table
             columns={[
               { key: "climber", label: "Climber", path: "climber.name", sortable: true, filterable: true, links: true},

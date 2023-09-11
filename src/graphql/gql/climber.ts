@@ -23,6 +23,15 @@ export interface ClimberProps{
     name: string
     nickname?: string
     sex?: string
+    climber_media?: {
+        id: number
+        media: {
+            id: number
+            type: string
+            label: string
+            url: string
+        }
+    }
 }
 
 export const QUERY_ALL_CLIMBERS = gql`
@@ -51,6 +60,15 @@ query Climbers($order_by: [climber_order_by!], $where: climber_bool_exp, $limit:
         name
         nickname
         sex
+        climber_media {
+            id
+            media {
+                id
+                type
+                label
+                url
+            }
+        }
     }
   }
 `

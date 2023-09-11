@@ -13,6 +13,7 @@ export interface ClimbProps{
           name: string
         }
     }
+    fa?: boolean
   }[]
   crag: {
     id: number
@@ -24,6 +25,15 @@ export interface ClimbProps{
   grade: string
   name: string
   description: string
+  climb_media?: {
+    id: number
+    media: {
+        id: number
+        type: string
+        label: string
+        url: string
+    }
+  }
 }
 
 export const QUERY_ALL_CLIMBS = gql`
@@ -44,6 +54,7 @@ query Climbs($order_by: [climb_order_by!], $where: climb_bool_exp, $limit: Int) 
           name
         }
       }
+      fa
     }
     crag {
       id
@@ -54,6 +65,15 @@ query Climbs($order_by: [climb_order_by!], $where: climb_bool_exp, $limit: Int) 
       }
     }
     description
+    climb_media {
+      id
+      media {
+          id
+          type
+          label
+          url
+      }
+    }
   }
 }
 `

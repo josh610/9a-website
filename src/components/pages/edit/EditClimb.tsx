@@ -1,12 +1,15 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
-import { QUERY_ALL_CLIMBS } from '../../graphql/gql/climb'
-import { AscentProps } from '../../graphql/gql/ascent'
-import { MediaProps } from '../../graphql/gql/media'
+import { QUERY_ALL_CLIMBS } from '../../../graphql/gql/climb'
+import { AscentProps } from '../../../graphql/gql/ascent'
 //import pic from '../../assets/dreamcatcher.jpeg'
 
-const Climb = () => {
+interface EditClimbProps {
+    id: number
+}
+
+const EditClimb = () => {
     const { id } = useParams()
     const { loading, error, data } = useQuery(QUERY_ALL_CLIMBS, {variables: {where: {id: {_eq: id}}}})
 
@@ -34,7 +37,7 @@ const Climb = () => {
                 : (<></>)
             }
             <div>
-                Ascents: ({ascents.length}){ascents.sort((a: AscentProps, b: AscentProps) =>
+                Ascents:{ascents.sort((a: AscentProps, b: AscentProps) =>
                     a._date ?
                         b._date ?
                             a._date.localeCompare(b._date.toString())
@@ -54,16 +57,14 @@ const Climb = () => {
             </div>
             <div>
                 {climb.climb_media ? "Videos:" : ""}
-                {climb.climb_media?.map((climbMedia: MediaProps) => {
-                    if(climbMedia.media.type == "youtube") {
-                        return (
-                            <iframe className="h-52 w-fit" src={climbMedia.media.url.replace('watch?v=', 'embed/')}></iframe>
-                        )
-                    }
+                {climb.climb_media?.map((videoLink: string) => {
+                    return (
+                        <iframe className="h-52 w-fit" src={videoLink}></iframe>
+                    )
                 })}
             </div>
         </div>
     )
 }
 
-export default Climb
+export default EditClimb
