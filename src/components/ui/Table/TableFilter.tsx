@@ -15,6 +15,11 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
     })
     const [filter, setFilter] = useState<FilterMap>(f)
 
+    const changeFilter = (newFilter: FilterMap) => {
+        setFilter(newFilter)
+        handleFilter({where: filter})
+    }
+
     const getFieldContent = (path: string): {key: any, value: any, label: string}[] => {
         return [{key: "0", value: "none", label: "None"}].concat(
             Array.from(new Set(data.map(d => getValueFromPath(path, d))))
@@ -48,14 +53,14 @@ const TableFilter = ({ columns, handleFilter, data }: TableFilterProps) => {
                                         path,
                                         e == "none" ? {} : {_eq: e}
                                     )
-                                    setFilter(newFilter)
-                                    handleFilter(newFilter)
+                                    changeFilter(newFilter)
                                 }
                             }
                         />
                     </div>
                 )
             })}
+            {/*<button className="bg-slate-500" onClick={() => changeFilter(f)}>Clear Filters</button>*/}
         </div>
     )
 }
@@ -78,7 +83,7 @@ const setQueryFilters = (o: FilterMap, path: string, target: {}) => {
         o[s[0]] = target
     }
     else{
-        o[s[0]] = {}
+        if(!o[s[0]]) o[s[0]] = {}
         setQueryFilters(o[s[0]], s[1], target)
     }
 }

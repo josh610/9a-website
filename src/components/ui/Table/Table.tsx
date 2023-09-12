@@ -29,10 +29,6 @@ const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, quer
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error : {error.message}</p>
 
-    const changeFilter = (filter: {}) => {
-        refetch({where: filter})
-    }
-
     return (
         <div>
             Limit:
@@ -48,7 +44,7 @@ const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, quer
                     setLimit(e)
                 }}
             />
-            <TableFilter columns={columns} handleFilter={changeFilter} data={data[queryName]}/>
+            <TableFilter columns={columns} handleFilter={refetch} data={data[queryName]}/>
             <table className="">
                 <TableHead columns={columns} handleSorting={refetch}/>
                 <TableBody columns={columns} data={data[queryName]} limit={limit}/>
