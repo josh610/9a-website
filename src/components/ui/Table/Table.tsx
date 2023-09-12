@@ -23,12 +23,15 @@ interface TableProps {
  */
 const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, queryLimits }: TableProps) => {
     const [limit, setLimit] = useState<number>(queryLimits[0])
-    const [filter, setFilter] = useState(queryFilterMap)
 
     const {loading, error, data, refetch} = useQuery(query, {variables: queryVariables})
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error : {error.message}</p>
+
+    const changeFilter = (filter: {}) => {
+        refetch({where: filter})
+    }
 
     return (
         <div>
@@ -45,7 +48,7 @@ const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, quer
                     setLimit(e)
                 }}
             />
-            <TableFilter columns={columns} handleFilter={refetch} data={data[queryName]}/>
+            <TableFilter columns={columns} handleFilter={changeFilter} data={data[queryName]}/>
             <table className="">
                 <TableHead columns={columns} handleSorting={refetch}/>
                 <TableBody columns={columns} data={data[queryName]} limit={limit}/>
