@@ -18,6 +18,13 @@ const Climb = () => {
 
     return (
         <div className="flex flex-col space-y-5">
+            <Link
+                className="text-right"
+                to={`/climbs/${id}/edit`}>
+            Edit this page
+            </Link>
+            <br/><br/>
+
             <div className="self-center text-5xl">{climb.name} ({climb.grade})</div>
             <div className="flex items-end justify-end">
                 <img className="" src={require('../../assets/dreamcatcher.jpeg')}></img>

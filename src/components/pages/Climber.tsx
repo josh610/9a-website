@@ -28,15 +28,18 @@ const Climber = () => {
             </Link>
             <br/><br/>
             
-            <div className="flex">
+            <div className="flex justify-between">
                 <div>
-                    <div>Name: {climber.name}</div>
+                    <div className="text-6xl">{climber.name}</div>
 
                     {climber.dob ?
-                    (<div>Date of birth: {new Date(climber.dob).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })} ({getAge(climber.dob)} years old)</div>)
+                    (<div className="text-2xl">Date of birth: {new Date(climber.dob).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })} ({getAge(climber.dob)} years old)</div>)
                     : <></>}
+
+                    <div className="text-2xl">Home country: {climber.home_country.name}</div>
                     <br></br>
                 </div>
+                
                 <div className="flex items-end justify-end w-5/12">
                     <img className="w-full" src={require('../../assets/ROCKCLIMB.jpg')}></img>
                 </div>

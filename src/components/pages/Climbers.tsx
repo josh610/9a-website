@@ -2,15 +2,16 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { QUERY_ALL_CLIMBERS } from '../../graphql/gql/climber'
 import Table from '../ui/Table/Table'
+import { Link } from 'react-router-dom'
 
 const Climbers = () => {
   const {loading, error, data} = useQuery(gql`query Climbers {climber_aggregate {aggregate {count}}}`)
 
   return (
     <>
-    <div>
+    <center>
       {loading ? error ? (<p>Error : {error.message}</p>) : (<p>Loading...</p>) : `${data.climber_aggregate.aggregate.count} Climbers`}
-    </div>
+    </center>
     <br></br>
     <div>
         <Table
@@ -22,18 +23,6 @@ const Climbers = () => {
           query={QUERY_ALL_CLIMBERS}
           queryVariables={{}}
           queryName={"climber"}
-          queryFilterMap={{
-            "where": {
-                name: {},
-                grade: {},
-                crag: {
-                    name: {},
-                    country: {
-                        name: {}
-                    }
-                }
-            }
-          }}
           queryLimits={[10, 20, 50]}
         />
     </div>

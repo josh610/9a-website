@@ -13,7 +13,6 @@ interface TableProps {
     query: DocumentNode
     queryVariables: {}
     queryName: any
-    queryFilterMap: {}
     queryLimits: number[]
 }
 
@@ -21,7 +20,7 @@ interface TableProps {
 /**
  * Table from database query with options to sort, filter and limit query results
  */
-const Table = ({ columns, query, queryVariables, queryName, queryFilterMap, queryLimits }: TableProps) => {
+const Table = ({ columns, query, queryVariables, queryName, queryLimits }: TableProps) => {
     const [limit, setLimit] = useState<number>(queryLimits[0])
 
     const {loading, error, data, refetch} = useQuery(query, {variables: queryVariables})

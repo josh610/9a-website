@@ -8,7 +8,7 @@ const Sidebar = () => {
             <SidebarButton link={'/ascents'} label={'All Ascents'}/>
             <SidebarButton link={'/climbs'} label={'Climbs'}/>
             <SidebarButton link={'/climbers'} label={'Climbers'}/>
-            <SidebarButton link={''} label={'Add New Ascent'}/>
+            <SidebarButton link={'/create'} label={'Add New'}/>
         </div>
     )
 }

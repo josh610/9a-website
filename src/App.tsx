@@ -10,6 +10,8 @@ import Country from './components/pages/Country'
 import Crag from './components/pages/Crag'
 import Climbers from './components/pages/Climbers'
 import EditClimber from './components/pages/edit/EditClimber'
+import EditClimb from './components/pages/edit/EditClimb'
+import CreateNew from './components/pages/CreateNew'
 import './styles/global.css'
 
 
@@ -27,6 +29,8 @@ const App = () => {
           <Route path="/crags/:id" Component={Crag}/>
           <Route path="/countries/:id" Component={Country}/>
           <Route path="/climbers/:id/edit" Component={EditClimber}/>
+          <Route path="/climbs/:id/edit" Component={EditClimb}/>
+          <Route path="/create" Component={CreateNew}/>
         </Routes>
       </Layout>
     </BrowserRouter>

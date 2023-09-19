@@ -8,6 +8,7 @@ const Climbs = () => {
 
   return (
     <>
+    <br/>
     <div>
       {loading ? error ? (<p>Error : {error.message}</p>) : (<p>Loading...</p>) : `${data.climb_aggregate.aggregate.count} Climbs`}
     </div>
@@ -25,18 +26,6 @@ const Climbs = () => {
           query={QUERY_ALL_CLIMBS}
           queryVariables={{}}
           queryName={"climb"}
-          queryFilterMap={{
-            "where": {
-                name: {},
-                grade: {},
-                crag: {
-                    name: {},
-                    country: {
-                        name: {}
-                    }
-                }
-            }
-          }}
           queryLimits={[10, 20, 50]}
         />
     </div>

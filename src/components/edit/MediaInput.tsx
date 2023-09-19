@@ -1,7 +1,7 @@
 /** CURRENTLY NOT IN USE */
 
-import { gql } from '@apollo/client'
 import React, { useState } from 'react'
+import { gql } from '@apollo/client'
 import { graphqlClient } from '../../graphql/Client'
 
 interface ObjectProps {
@@ -10,6 +10,7 @@ interface ObjectProps {
 
 interface DataProps {
     type: string
+    //$ascentMedia: [ascent_media_insert_input!]!, $climberMedia: [climber_media_insert_input!]!, $climbMedia: [climb_media_insert_input!]!
     data: ObjectProps[]
 }
 
@@ -52,7 +53,7 @@ const MediaInput = ({ data, reload }: MediaInputProps) => {
                 onClick={() => {
     
                     const mutation = gql`
-                        mutation UpsertAscentClimberClimbMedia($ascentMedia: [ascent_media_insert_input!]!, $climberMedia: [climber_media_insert_input!]!, $climbMedia: [climb_media_insert_input!]!) {
+                        mutation UpsertMedia($ascentMedia: [ascent_media_insert_input!]!, $climberMedia: [climber_media_insert_input!]!, $climbMedia: [climb_media_insert_input!]!) {
                             insert_ascent_media(objects: $ascentMedia, on_conflict: {constraint: ascent_media_ascent_id_media_id_key}) {
                                 affected_rows
                             }

@@ -2,6 +2,7 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import {  QUERY_ALL_ASCENTS } from '../../graphql/gql/ascent'
 import Table from '../ui/Table/Table'
+import { Link } from 'react-router-dom'
 
 
 const NumberOfAscents = () => {
@@ -38,26 +39,6 @@ const Ascents = () => {
             query={QUERY_ALL_ASCENTS}
             queryVariables={{}}
             queryName={"ascent"}
-            queryFilterMap={{
-              "where": {
-                climber: {
-                  name: {},
-                  home_country: {
-                    name: {}
-                  }
-                },
-                climb: {
-                  name: {},
-                  grade: {},
-                  crag: {
-                    name: {},
-                    country: {
-                      name: {}
-                    }
-                  }
-                }
-              }
-            }}
             queryLimits={[10, 20, 50]}
           />
       </div>
