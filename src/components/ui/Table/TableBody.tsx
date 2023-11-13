@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import { getValueFromPath } from "./common"
+import { valueFromPath } from '../../../common/ParserFunctions'
 const Pluralize = require('pluralize')
 
 interface TBodyProps {
@@ -21,13 +21,13 @@ const TableBody = ({ columns, data, limit }: TBodyProps) => {
                     <tr className={cName}
                         key={d.id}>
                         {columns.map(col => {
-                            const name = getValueFromPath(col.path, d)
+                            const name = valueFromPath(col.path, d)
                             const page = Pluralize(col.key)
 
                             // get path to ID
                             const idPathStrings = col.path.split('.')
                             idPathStrings[idPathStrings.length - 1] = "id"
-                            const id = getValueFromPath(idPathStrings.join('.'), d)
+                            const id = valueFromPath(idPathStrings.join('.'), d)
                             
                             return (
                                 <td className="border-2 border-black" key={col.key}>

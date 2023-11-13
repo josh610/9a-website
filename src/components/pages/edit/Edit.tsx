@@ -1,40 +1,45 @@
-/** CURRENTLY NOT IN USE */
+/**
+ * Generic edit component which can be used to edit Climbs and Climbers
+ * 
+ * @todo finish this. Also extend it to work for editing Ascents, Crags, etc.
+ */
 
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { DocumentNode, gql, useQuery } from '@apollo/client'
 import { graphqlClient } from '../../../graphql/Client'
 import { MediaProps } from '../../../graphql/gql/media'
-import EditAscentDate from '../../edit/climber/EditAscentDateFa'
-import { AscentProps, QUERY_ALL_ASCENTS } from '../../../graphql/gql/ascent'
-import { QUERY_ALL_CLIMBERS } from '../../../graphql/gql/climber'
 import ClimberMediaInput from '../../edit/climber/ClimberMediaInput'
-import AscentMediaInput from '../../edit/ascent/AscentMediaInput'
+import { valueFromPath } from '../../../common/ParserFunctions'
 
 interface BasicInfoProps {
-    type: string
+    fieldName: string
     label: string
-    data: any
+    value: any
 }
 
 interface ArrayProps {
-    type: string
-    query: DocumentNode
+    tableName: string
     label: string
-    data: any[]
+    data: {
+        label: string
+        path: string
+    }[]
+    query: DocumentNode
+    values: any[]
     sortFunction: (a: any, b: any) => number
 }
 
 interface EditProps {
     query: DocumentNode
-    type: string
+    tableName: string
     basicInfo: BasicInfoProps[]
     arrays: ArrayProps[]
     media: MediaProps[]
     reload: () => any
 }
 
-const Edit = ({ query, type, basicInfo, arrays, media, reload }: EditProps) => {
+const Edit = ({ query, tableName, basicInfo, arrays, media, reload }: EditProps) => {
     const { id } = useParams()
 
     const {loading, error, data, refetch} = useQuery(query, {variables: {where: {id: {_eq: id}}}})
@@ -42,47 +47,44 @@ const Edit = ({ query, type, basicInfo, arrays, media, reload }: EditProps) => {
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error : {error.message}</p>
 
-    const target = data[type][0]
+    const target = data[tableName][0]
 
 
     const _Edit = () => {
-        //const [name, setName] = useState<string>(props.name)
-        //const [dob, setDob] = useState<string>(props.dob)
-    
-        const [nameChanged, setNameChanged] = useState<boolean>(false)
-        const [dobChanged, setDobChanged] = useState<boolean>(false)
-
         const [basicInfoChanged, setBasicInfoChanged] = useState<boolean>(false)
-    
-    
         const [addMedia, setAddMedia] = useState<boolean>(false)
-    
         const navigate = useNavigate()
-    
         const { id } = useParams()
     
         var colorRow = false
-    
+
         return (
             <div>
-                <button className="border-black border-2 p-1" onClick={() => navigate(`/climbers/${id}`)}>Back</button>
+                <button className="border-black border-2 p-1" onClick={() => navigate(`/climbs/${id}`)}>Back</button>
                 <br/><br/>
     
-                {/** Basic Info **/}
+                {/**
+                 * --Basic Info--
+                 * 
+                 * Elements of an object which the object has a 1-1 or many-1 relationship with.
+                 * Ie. name, age
+                 */}
                 <div className="border-black border-2">
                     {basicInfo.map((info: BasicInfoProps) => {
                         return (
-                            <BasicInfoInput label={info.label} value={info.type} updateInputState={setBasicInfoChanged}/>
+                            <BasicInfoInput label={info.label} value={info.value} updateInputState={setBasicInfoChanged}/>
                         )
                     })}
                     <br/><br/>
+
+                    {/* Save button */}
                     <button
                         className={basicInfoChanged ? "bg-red-500 hover:bg-red-600 font-bold" : "bg-gray-400 font-bold pointer-events-none"}
                         id="submit"
                         onClick={() => {
                             const mutation = gql`
-                                mutation Update${type}($id: Int, $name: String, $dob: date) {
-                                    update_${type}(
+                                mutation Update${tableName}($id: Int, $name: String, $dob: date) {
+                                    update_${tableName}(
                                         where: {id: {_eq: $id}},
                                         _set: {
                                             ${basicInfo.map((b: BasicInfoProps) => b.label)}
@@ -102,8 +104,7 @@ const Edit = ({ query, type, basicInfo, arrays, media, reload }: EditProps) => {
                             })
                             .then(reload)
                             .then(() => {
-                                setNameChanged(false)
-                                setDobChanged(false)
+
                             })
                         }}
                     >
@@ -112,29 +113,39 @@ const Edit = ({ query, type, basicInfo, arrays, media, reload }: EditProps) => {
                 </div>
                 <br/>
                 
-                {/** Arrays **/}
+                {/**
+                 * --Arrays--
+                 * 
+                 * Elements of an object which the object has a 1-many or many-many relationship with.
+                 * Ie. a Climb's ascents
+                 */}
                 <div className="border-black border-2">
                     {arrays.map((arr: ArrayProps) => {
                         return (
-                            <>
-                            <div className="font-bold">{arr.label}({arr.data.length}):</div>
-                            <div>{[...arr.data].sort(arr.sortFunction)
-                            .map(a => {
-                                const color = colorRow ? "" : "bg-slate-200"
-                                colorRow = !colorRow
-            
-                                return (
-                                    <TargetInfo rowColor={color}/>
-                                )
-                            })}
+                            <div>
+                                <div className="font-bold">{arr.label}({arr.values.length}):</div>
+                                <div>
+                                    {[...arr.values].sort(arr.sortFunction)
+                                    .map(a => {
+                                        const color = colorRow ? "" : "bg-slate-200"
+                                        colorRow = !colorRow
+                    
+                                        return (
+                                            <TargetInfo rowColor={color} target={a} data={arr.data}/>
+                                        )
+                                    })}
+                                </div>
                             </div>
-                            </>
                         )
                     })}
                 </div>
                 <br/>
     
-                {/** Media **/}
+                {/**
+                 * --Media--
+                 * 
+                 * An object's media
+                 */}
                 <div className=" border-black border-2">
                     <div className="font-bold">Media:</div>
                     <div className="">
@@ -142,6 +153,8 @@ const Edit = ({ query, type, basicInfo, arrays, media, reload }: EditProps) => {
                             var cName = ""
                             return (
                                 <div className="flex">
+
+                                    {/* Delete button */}
                                     <button
                                         className="bg-red-600 border-red-800 border-2 p-1"
                                         onClick={() => {
@@ -165,7 +178,9 @@ const Edit = ({ query, type, basicInfo, arrays, media, reload }: EditProps) => {
                                         }}
                                         >
                                         X
-                                    </button> 
+                                    </button>
+
+                                    {/* Display media label and URL */}
                                     <div className={cName}>{climberMedia.media.label} ({climberMedia.media.url})</div>
                                 </div>
                             )
@@ -190,32 +205,18 @@ const Edit = ({ query, type, basicInfo, arrays, media, reload }: EditProps) => {
                         }
                     </div>
                 </div>
+                <br/>
+
+                <button
+                    className="bg-red-500 hover:bg-red-600 font-bold"
+                    onClick={() => {
+
+                    }}>
+                    Delete {}
+                </button>
             </div>
         )
     }
-
-
-    const TargetInfo = ({ rowColor }: {rowColor: string}) => {
-        const {loading, error, data} = useQuery(query, {variables: {where: {id: {_eq: id}}}})
-    
-        if (loading) return <p>Loading...</p>
-        if (error) return <p>Error : {error.message}</p>
-    
-        const target = data.ascent[0]
-    
-        return (
-            <div className={rowColor}>
-                <EditAscentDate ascent={target} handleChange={reload}/>
-                <>
-                    {target.ascent_media?.map((ascentMedia: MediaProps) => {
-                        return <div>*{ascentMedia.media.url}</div>
-                    })}
-                </>
-                <AscentMediaInput ascent={target} handleChange={reload}/>
-            </div>
-        )
-    }
-
 
     return (
         <_Edit/>
@@ -238,7 +239,7 @@ const BasicInfoInput = ({ label, value, updateInputState }: BasicInfoInputProps)
         <input
             type="text"
             id={label}
-            placeholder={value}
+            placeholder={info}
             onChange={e => {
                 setInfo(e.target.value)
                 if(e.target.value == "") updateInputState(false)
@@ -250,5 +251,91 @@ const BasicInfoInput = ({ label, value, updateInputState }: BasicInfoInputProps)
 }
 
 
+interface Target {
+    [key: string]: any
+}
+
+interface TargetInfoProps {
+    rowColor: string
+    target: Target
+    data: {
+        path: string
+        label: string
+    }[]
+}
+
+const TargetInfo = ({ rowColor, target, data }: TargetInfoProps) => {
+    return (
+        <div className={rowColor}>
+            {
+                data.map(d => {
+                    return <ArrayInput label={d.label} value={valueFromPath(d.path, target)} color={rowColor}/>
+                })
+            }
+        </div>
+    )
+}
+
+
+interface ArrayInputProps {
+    label: string
+    value: string
+    color: string
+}
+
+const ArrayInput = ({ color, label, value }: ArrayInputProps) => {
+    const [info, setInfo] = useState<string>(value)
+    const [infoChanged, setInfoChanged] = useState<boolean>(false)
+
+    return (
+        <div>
+            {label}
+            <input
+                type="text"
+                id={label}
+                placeholder={info}
+                onChange={e => {
+                    setInfo(e.target.value)
+                    if(e.target.value == "") updateInputState(false)
+                    else updateInputState(true)
+                }}
+            />
+
+            {/* Save button */}
+            <button
+                className={infoChanged ? "bg-red-500 hover:bg-red-600 font-bold" : "bg-gray-400 font-bold pointer-events-none"}
+                id="submit"
+                onClick={() => {
+                    const mutation = gql`
+                        mutation Update${tableName}($id: Int, $name: String, $dob: date) {
+                            update_${tableName}(
+                                where: {id: {_eq: $id}},
+                                _set: {
+                                    ${basicInfo.map((a: ArrayInputProps) => a.label)}
+                                }) {
+                                affected_rows
+                            }
+                        }
+                    `
+
+                    const variables = 
+                        {
+                        }
+                    
+                    graphqlClient.mutate({mutation: mutation, variables: variables})
+                    .then(rs => {
+                        alert(rs.data?.update_climber.affected_rows + " row(s) updated")
+                    })
+                    .then(reload)
+                    .then(() => {
+
+                    })
+                }}
+            >
+            Save
+            </button>
+        </div>
+    )
+}
 
 export default Edit

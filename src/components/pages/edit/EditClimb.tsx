@@ -9,6 +9,7 @@ import ClimberMediaInput from '../../edit/climber/ClimberMediaInput'
 import AscentMediaInput from '../../edit/ascent/AscentMediaInput'
 import { QUERY_ALL_CLIMBS } from '../../../graphql/gql/climb'
 import ClimbMediaInput from '../../edit/climb/ClimbMediaInput'
+import Edit from './Edit'
 
 
 interface EditProps {
@@ -31,6 +32,39 @@ const EditClimb = () => {
 
     return (
         <Edit
+            query={QUERY_ALL_CLIMBS}
+            tableName="climb"
+            basicInfo={[
+                {fieldName: "name", label: "Name", value: climb.name},
+                {fieldName: "grade", label: "Grade", value: climb.grade}
+            ]}
+            arrays={[
+                {
+                    tableName: "ascent",
+                    label: "Ascents",
+                    query: QUERY_ALL_ASCENTS,
+                    values: [...climb.ascents],
+                    data: [
+                        {path: "climber.name", label: "Climber"},
+                        {path: "_date", label: "Date"}
+                    ],
+                    sortFunction: (a: AscentProps, b: AscentProps) => 
+                        a._date ?
+                            b._date ?
+                                a._date.localeCompare(b._date.toString())
+                            : 1
+                        : -1
+                }
+            ]}
+            media={[
+
+            ]}
+            reload={refetch}
+        />
+    )
+    /*
+    return (
+        <Edit
             name={climb.name}
             grade={climb.grade}
             ascents={climb.ascents}
@@ -38,9 +72,10 @@ const EditClimb = () => {
             handleChange={refetch}
         />
     )
+    */
 }
 
-const Edit = (props: EditProps) => {
+const _Edit = (props: EditProps) => {
     const [name, setName] = useState<string>(props.name)
     const [grade, setGrade] = useState<string>(props.grade)
 
@@ -199,9 +234,13 @@ const Edit = (props: EditProps) => {
                     }
                 </div>
             </div>
+
+            <button
+                className="bg-red-500">Delete Climb</button>
         </div>
     )
 }
+
 
 interface AscentInfoProps {
     id: number

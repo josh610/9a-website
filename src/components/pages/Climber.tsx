@@ -16,9 +16,6 @@ const Climber = () => {
     const climber = data.climber[0]
     const ascents = [...climber.ascents]
 
-    const event = new Date('2011/10');
-    console.log(event.toString());
-
     return (
         <div>
             <Link

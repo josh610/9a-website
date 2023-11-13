@@ -8,6 +8,7 @@ import { AscentProps, QUERY_ALL_ASCENTS } from '../../../graphql/gql/ascent'
 import { QUERY_ALL_CLIMBERS } from '../../../graphql/gql/climber'
 import ClimberMediaInput from '../../edit/climber/ClimberMediaInput'
 import AscentMediaInput from '../../edit/ascent/AscentMediaInput'
+import Edit from './Edit'
 
 
 interface EditProps {
@@ -30,6 +31,40 @@ const EditClimber = () => {
 
     return (
         <Edit
+            query={QUERY_ALL_CLIMBERS}
+            tableName="climber"
+            basicInfo={[
+                {fieldName: "name", label: "Name", value: climber.name},
+                {fieldName: "dob", label: "Date of birth", value: climber.dob}
+            ]}
+            arrays={[
+                {
+                    tableName: "ascent",
+                    label: "Ascents",
+                    query: QUERY_ALL_ASCENTS,
+                    values: [...climber.ascents],
+                    data: [
+                        {path: "climb.name", label: "Climb"},
+                        {path: "_date", label: "Date"}
+                    ],
+                    sortFunction: (a: AscentProps, b: AscentProps) => 
+                        a._date ?
+                            b._date ?
+                                a._date.localeCompare(b._date.toString())
+                            : 1
+                        : -1
+                }
+            ]}
+            media={[
+
+            ]}
+            reload={refetch}
+        />
+    )
+
+    /*
+    return (
+        <_Edit
             name={climber.name}
             dob={climber.dob}
             ascents={climber.ascents}
@@ -37,9 +72,10 @@ const EditClimber = () => {
             handleChange={refetch}
         />
     )
+    */
 }
 
-const Edit = (props: EditProps) => {
+const _Edit = (props: EditProps) => {
     const [name, setName] = useState<string>(props.name)
     const [dob, setDob] = useState<string>(props.dob)
 
